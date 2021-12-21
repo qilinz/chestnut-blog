@@ -18,10 +18,12 @@ ckeditor = CKEditor(app)
 Bootstrap(app)
 
 ## CONNECT TO DB
-if os.environ.get("DATABASE_URL"):
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
-else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///blog.db"
+# Solve issue between heroku and postgres
+uri = os.getenv("DATABASE_URL")  # or other relevant config var
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -238,4 +240,4 @@ def load_user(user_id):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run()
