@@ -47,9 +47,9 @@ gravatar = Gravatar(app,
 class User(UserMixin, db.Model):
     __tablename__ = "user_info"
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), nullable=False, unique=True)
-    name = db.Column(db.String(100), nullable=False)
-    password = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(250), nullable=False, unique=True)
+    name = db.Column(db.String(250), nullable=False)
+    password = db.Column(db.String(250), nullable=False)
 
     # relationships
     posts = relationship("BlogPost", back_populates="author")
