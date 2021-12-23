@@ -84,8 +84,8 @@ class Comment(db.Model):
     blog_id = db.Column(db.Integer, db.ForeignKey("blog_posts.id"))
     parent_post = relationship("BlogPost", back_populates="comments")
 
-# Create database
-db.create_all()
+# # Create database
+# db.create_all()
 
 
 # Create a admin-only route
@@ -202,7 +202,7 @@ def add_new_post():
     return render_template("make-post.html", form=form)
 
 
-@app.route("/edit-post/<int:post_id>")
+@app.route("/edit-post/<int:post_id>", methods=["POST", "GET"])
 @admin_only
 def edit_post(post_id):
     post = BlogPost.query.get(post_id)
